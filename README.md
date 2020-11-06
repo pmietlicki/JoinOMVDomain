@@ -1,23 +1,13 @@
-# Script melhorado
-Pessoal o Eduardo Jonck um grande amigo pegou o meu script e fez várias melhoras, ele agora é em Dialog o que facilita a compreensão, faz as edições do arquivo smb.conf automaticamente, etc. O meu script ficará aqui disponível para caso alguém queira, porém recomendo agora usar o dele:
-
-https://github.com/eduardojonck/scripts/blob/master/Linux/Shell/Join_OMV_to_AD_1.0
-
 # JoinOMVDomain
-Script para integrar o OpenMediaVault 3, 4 e 5 no domínio
+Script to integrate OpenMediaVault 3, 4 and 5 in the domain
 
-Com esse script você conseguirá adicionar o OpenMediaVault em um Domínio Samba4 ou Windows Server, no Windows Server foi homologado no 2008R2 e 2012R2 (as VMs que tinha aqui), porém acredito que funcionará com qualquer versão do Windows Server.
+With this script you will be able to add OpenMediaVault to a Samba4 or Windows Server Domain, on Windows Server it was homologated in 2008R2 and 2012R2 but it should work with any version of Windows Server.
 
-# Utilização
-Para fazer uso do script, só faça o download do arquivo, dê permissão de execução e execute-o como root ou sudo:
+# Use
+To use this script, just download the file, give execution permission and run it as root or sudo:
 
-
-wget https://raw.githubusercontent.com/Tacioandrade/JoinOMVDomain/master/JoinDC.sh
-
-
+wget https://raw.githubusercontent.com/pmietlicki/JoinOMVDomain/master/JoinDC.sh
 chmod +x JoinDC.sh
-
-
 ./JoinDC.sh
 
-Após executar o script siga o passo a passo e reinicie o OpenMediaVault, após reiniciar, só ir olhar no menu de Usuários da ferramenta e verá que todos os usuários já foram adicionados!
+Follow instructions step by step and restart OpenMediaVault, after restarting, just go look at the Users menu of the tool and you will see that all users have been added !
