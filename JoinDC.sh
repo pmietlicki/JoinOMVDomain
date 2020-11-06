@@ -1,19 +1,19 @@
 #!/bin/bash
-# Criado: Tácio de Jesus Andrade - tacio@multiti.com.br
-# Data: 22-12-2019
-# Função: Script que Integra o OpenMediaVault 3, 4 ou 5 no Domínio
-# Informações: Antes de executar esse script verifique se o DNS server é o Domain Controller e se pinga para o dominio.local 
+# Created by: Tácio de Jesus Andrade - tacio@multiti.com.br
+# Date: 22-12-2019
+# Goal: Script to integrate OpenMediaVault 3, 4 or 5 inside an AD domain
+# Information: Before executing this script check if the DNS server is the Domain Controller and if it pings to the domain.local
 
-echo "Informe o nome do domínio Ex. EXEMPLO.LOCAL: " ; read DOMAIN
-echo "Informe o nome do seu Domain Controller Ex. dc01.exemplo.local: " ; read DC
-echo "Informe o usuário que será usado como Domain Admin para integrar ao domínio: " ; read DOMAINUSER
-# Instala os pacotes necessários
+echo "Enter domain name Ex. EXAMPLE.LOCAL: " ; read DOMAIN
+echo "Enter the name of your Domain Controller Ex. dc01.example.local: " ; read DC
+echo "Please enter a domain admin login to use: " ; read DOMAINUSER
+# Install the necessary packages
 apt-get install krb5-user krb5-config winbind samba samba-common smbclient cifs-utils libpam-krb5 libpam-winbind libnss-winbind
 
-# Backup arquivo Kerberos
+# Backup Kerberos file
 cp /etc/krb5.conf /etc/krb5.conf.ori
 
-# Corrige arquivo Kerberos
+# Correct Kerberos file
 echo "[logging]
 Default = FILE:/var/log/krb5.log
 
@@ -57,16 +57,16 @@ rpc:            db files
 
 netgroup:       nis" > /etc/nsswitch.conf
 
-# Testa se a conexão com o DC está ok
+# Test if the connection to the DC is okay
 echo "
 
 
-Digite a senha de Administrador do domínio para checar a viabilidade de integrar ao domínio" 
+Enter the domain Administrator password" 
 kinit $DOMAINUSER
 klist
 
-# Adicione isso no Extras do samba para integrar ao domínio
-echo "Habilite o samba e adicione isso no campo Extras do samba do OpenMediaVault pela interface gráfica:
+# Samba Extras to integrate to the domain
+echo "Enable samba and add it to the OpenMediaVault Samba Extras field through the graphical interface:
 
 security = ads
 realm = `echo $DOMAIN`
@@ -96,17 +96,17 @@ client plaintext auth = No
 client NTLMv2 auth = Yes" > /tmp/smb.tmp
 cat /tmp/smb.tmp
 
-# Requisita o Enter para continuar a configuração
+# Type Enter to continue configuration
 echo "
 
 
-Após fazer a alteração, digite Enter: " ; read ENTER
+After making the changes, type Enter: " ; read ENTER
 
-# Integra ao domínio
+# Integration to the domain
 echo "
 
 
-Digite a senha de Administrador do domínio para integrar o OpenMediaVault ao DC" 
+Enter the domain Administrator password to integrate OpenMediaVault into DC" 
 net ads join -U $DOMAINUSER
 net ads testjoin
 
@@ -118,4 +118,4 @@ net ads testjoin
 sleep 3
 wbinfo -u
 
-echo "Reinicie o servidor e verifique se os usuários foram adicionados a interface gráfica com sucesso!"
+echo "Reboot the server and check if users have been added to the graphical interface successfully!"
